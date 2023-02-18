@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=http://proliant.local:5000/api/config/schema
+mqtt:
+  host: "{MQTT_HOST}"
+  user: "{MQTT_USER}"
+  password: "{MQTT_PASS}"
+objects:
+  track:
+    - person
+    - car
+    - cat
+    - dog
+cameras:
+  garageEntrance:
+    ffmpeg:
+      hwaccel_args:
+        - -hwaccel
+        - vaapi
+        - -hwaccel_device
+        - /dev/dri/renderD128
+        - -hwaccel_output_format
+        - yuv420p
+      inputs:
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/1
+          roles:
+            - detect
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.252/ch01/0
+          roles:
+            - record
+            - restream
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+    snapshots:
+      enabled: True
+  driveway:
+    motion:
+      mask:
+        - 599,293,640,325,640,480,481,480
+        - 640,0,179,0,180,21,640,171
+    zones:
+      zone_0:
+        coordinates: 593,173,640,322,474,480,84,480,0,159,350,123
+    objects:
+      filters:
+        car:
+          mask:
+            - 104,72,225,32,342,122,263,125
+        person:
+          mask:
+            - 519,428,436,417,438,388,535,402
+    ffmpeg:
+      hwaccel_args:
+        - -hwaccel
+        - vaapi
+        - -hwaccel_device
+        - /dev/dri/renderD128
+        - -hwaccel_output_format
+        - yuv420p
+      inputs:
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/1
+          roles:
+            - detect
+        - path: rtsp://admin:{FRIGATE_RTSP_PASSWORD}@10.0.1.253/ch01/0
+          roles:
+            - record
+            - restream
+    detect:
+      width: 640
+      height: 480
+    record:
+      enabled: True
+      events:
+        required_zones:
+          - zone_0
+    snapshots:
+      enabled: True
