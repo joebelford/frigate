@@ -1,3 +1,4 @@
+# yamllint disable-line rule:line-length
 # yaml-language-server: $schema=http://frigate.home.arpa:5000/api/config/schema.json
 mqtt:
   host: homeassistant.home.arpa
