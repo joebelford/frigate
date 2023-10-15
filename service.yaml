@@ -1,0 +1,31 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: frigate
+  labels:
+    app: frigate
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 10.0.1.90
+  namespace: frigate
+spec:
+  selector:
+    app: frigate
+    # app.kubernetes.io/name: frigate
+  ports:
+    - protocol: TCP
+      port: 5000
+      name: http-web
+    - protocol: TCP
+      port: 1935
+      name: tcp-1935
+    - protocol: TCP
+      port: 8554
+      name: tcp-8554
+    - protocol: TCP
+      port: 8555
+      name: tcp-8555
+    - protocol: UDP
+      port: 8555
+      name: udp-8555
+  type: LoadBalancer

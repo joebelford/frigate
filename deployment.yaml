@@ -4,8 +4,9 @@ metadata:
   name: frigate
   labels:
     app: frigate
+  namespace: frigate
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: frigate
@@ -14,9 +15,21 @@ spec:
       labels:
         app: frigate
     spec:
+      volumes:
+        - name: frigate-config
+          configMap:
+            name: frigate-config
       containers:
-      - name: frigate
-        image: ghcr.io/blakeblackshear/frigate:dev-babd976-tensorrt
-        ports:
-        - containerPort: 80
-        resources: {}
+        - name: frigate
+          image: ghcr.io/blakeblackshear/frigate:0.12.0-beta8-tensorrt
+          envFrom:
+            - secretRef:
+                name: frigate-secret
+          volumeMounts:
+            - mountPath: /config
+              name: frigate-config
+          ports:
+            - containerPort: 5000
+          resources:
+            limits:
+              gpu.intel.com/i915: 1
