@@ -21,7 +21,7 @@ spec:
             name: frigate-config
       containers:
         - name: frigate
-          image: ghcr.io/blakeblackshear/frigate:0.12.1-tensorrt
+          image: ghcr.io/blakeblackshear/frigate:stable-tensorrt
           envFrom:
             - secretRef:
                 name: frigate-secret
