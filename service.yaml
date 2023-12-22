@@ -6,7 +6,8 @@ metadata:
   labels:
     app: frigate
   annotations:
-    metallb.universe.tf/loadBalancerIPs: 10.0.1.90
+    io.cilium/lb-ipam-ips: 10.0.100.90
+#    metallb.universe.tf/loadBalancerIPs: 10.0.1.90
   namespace: frigate
 spec:
   selector:

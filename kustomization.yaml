@@ -2,10 +2,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  # - namespace.yaml
+  - namespace.yaml
+  - persistent-volume.yaml
+  - persistent-volume-claim.yaml
   - deployment.yaml
-  # - ingress.yaml
   - service.yaml
+namespace: frigate
 configMapGenerator:
   - name: frigate-config
     namespace: frigate

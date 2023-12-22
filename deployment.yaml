@@ -6,6 +6,7 @@ metadata:
     app: frigate
   namespace: frigate
 spec:
+  revisionHistoryLimit: 1
   replicas: 1
   selector:
     matchLabels:
@@ -19,15 +20,20 @@ spec:
         - name: frigate-config
           configMap:
             name: frigate-config
+        - name: frigate-media
+          persistentVolumeClaim:
+            claimName: frigate-media-pvc
       containers:
         - name: frigate
-          image: ghcr.io/blakeblackshear/frigate:stable-tensorrt
+          image: ghcr.io/blakeblackshear/frigate:stable
           envFrom:
             - secretRef:
                 name: frigate-secret
           volumeMounts:
             - mountPath: /config
               name: frigate-config
+            - mountPath: /media/frigate
+              name: frigate-media
           ports:
             - containerPort: 5000
           resources:
