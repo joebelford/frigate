@@ -4,7 +4,6 @@ metadata:
   name: frigate
   labels:
     app: frigate
-  namespace: frigate
 spec:
   revisionHistoryLimit: 1
   replicas: 1
@@ -15,6 +14,8 @@ spec:
     metadata:
       labels:
         app: frigate
+      annotations:
+        fluentbit.io/parser: nginx
     spec:
       volumes:
         - name: frigate-config
