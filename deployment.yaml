@@ -2,18 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frigate
-  labels:
-    app: frigate
 spec:
+  strategy:
+    type: Recreate
   revisionHistoryLimit: 1
   replicas: 1
   selector:
-    matchLabels:
-      app: frigate
   template:
     metadata:
-      labels:
-        app: frigate
       annotations:
         fluentbit.io/parser: nginx
     spec:

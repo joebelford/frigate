@@ -8,6 +8,12 @@ resources:
   - deployment.yaml
   - service.yaml
 namespace: frigate
+labels:
+  - pairs:
+      backstage.io/kubernetes-id: frigate
+    includeTemplates: true
+commonLabels:
+  app: frigate
 configMapGenerator:
   - name: frigate-config
     namespace: frigate
