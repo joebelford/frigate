@@ -11,4 +11,18 @@ spec:
   resources:
     requests:
       storage: 200Gi
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: frigate-config-pvc
+spec:
+  storageClassName: frigate-config-storageclass
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+
 

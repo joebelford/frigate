@@ -14,21 +14,28 @@ spec:
         fluentbit.io/parser: nginx
     spec:
       volumes:
-        - name: frigate-config
+        - name: frigate-config-file
           configMap:
             name: frigate-config
         - name: frigate-media
           persistentVolumeClaim:
             claimName: frigate-media-pvc
+        - name: frigate-config
+          persistentVolumeClaim:
+            claimName: frigate-config-pvc
       containers:
         - name: frigate
           image: ghcr.io/blakeblackshear/frigate:stable
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: frigate-secret
           volumeMounts:
             - mountPath: /config
               name: frigate-config
+            - mountPath: /config/config.yml
+              name: frigate-config-file
+              subPath: config.yml
             - mountPath: /media/frigate
               name: frigate-media
           ports:

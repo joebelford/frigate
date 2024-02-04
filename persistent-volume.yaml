@@ -21,4 +21,26 @@ spec:
           operator: In
           values:
             - proliant
-
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+    name: frigate-config-pv
+spec:
+  capacity:
+    storage: 10Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: frigate-config-storageclass
+  local:
+    path: /var/frigate_config
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+            - proliant
